@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Allgemein-Quiz App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #020617; 
+        color: #e2e8f0;
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+        /* Lebendigerer Basis-Hintergrund mit schnellerem Wechsel */
+        background: linear-gradient(125deg, #0f172a 0%, #312e81 25%, #4c1d95 50%, #0f172a 75%, #1e1b4b 100%);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #7c3aed; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #8b5cf6; 
+      }
+
+      /* --- Animated Background Effects --- */
+
+      .background-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      /* CSS Generated Stars */
+      .stars-small, .stars-medium {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+      }
+
+      .stars-small {
+        box-shadow: 
+          10vw 10vh #fff, 20vw 80vh #fff, 35vw 15vh #fff, 80vw 10vh #fff, 
+          70vw 50vh #fff, 90vw 90vh #fff, 50vw 30vh #fff, 10vw 90vh #fff;
+        width: 2px;
+        height: 2px;
+        animation: twinkle 3s infinite; /* Schnelleres Funkeln */
+        opacity: 0.8;
+      }
+
+      .stars-medium {
+        box-shadow: 
+          5vw 50vh #fff, 30vw 20vh #fff, 60vw 80vh #fff, 90vw 20vh #fff,
+          40vw 60vh #fff;
+        width: 3px;
+        height: 3px;
+        animation: twinkle 5s infinite 1s;
+        opacity: 0.6;
+      }
+
+      /* Nebula / Aurora Gradient Blobs - MAXIMALE SICHTBARKEIT */
+      .aurora-blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(50px); /* Weniger Blur für klarere Formen */
+        opacity: 0.7; /* Höhere Deckkraft */
+        mix-blend-mode: screen; /* 'Screen' lässt Farben leuchten */
+        animation: float-blob 12s infinite alternate ease-in-out;
+        will-change: transform;
+      }
+
+      .blob-1 {
+        top: -10%;
+        left: -10%;
+        width: 70vw;
+        height: 70vw;
+        /* Leuchtendes Violett */
+        background: radial-gradient(circle, rgba(167, 139, 250, 0.9) 0%, rgba(139, 92, 246, 0) 70%);
+        animation-delay: 0s;
+        animation-duration: 14s;
+      }
+
+      .blob-2 {
+        bottom: -10%;
+        right: -10%;
+        width: 70vw;
+        height: 70vw;
+        /* Leuchtendes Cyan */
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.8) 0%, rgba(14, 165, 233, 0) 70%);
+        animation-delay: -2s;
+        animation-duration: 16s;
+      }
+
+      .blob-3 {
+        top: 40%;
+        left: 30%;
+        width: 50vw;
+        height: 50vw;
+        /* Leuchtendes Pink */
+        background: radial-gradient(circle, rgba(244, 114, 182, 0.7) 0%, rgba(219, 39, 119, 0) 70%);
+        animation-delay: -5s;
+        animation-duration: 12s;
+      }
+      
+      .blob-4 {
+        bottom: 10%;
+        left: 0%;
+        width: 60vw;
+        height: 60vw;
+        /* Leuchtendes Indigo */
+        background: radial-gradient(circle, rgba(129, 140, 248, 0.8) 0%, rgba(79, 70, 229, 0) 70%);
+        animation-delay: -4s;
+        animation-duration: 18s;
+      }
+
+      /* Animations */
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes flowGradient {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+      }
+
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.4; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.4); }
+      }
+
+      @keyframes float-blob {
+        0% { 
+          transform: translate(0, 0) scale(1) rotate(0deg); 
+        }
+        33% {
+            transform: translate(10vw, -5vh) scale(1.1) rotate(10deg);
+        }
+        66% {
+            transform: translate(-5vw, 10vh) scale(0.9) rotate(-5deg);
+        }
+        100% { 
+          transform: translate(0, 0) scale(1) rotate(0deg); 
+        }
+      }
+
+      /* Grid Overlay - etwas sichtbarer */
+      .grid-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+        -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+        z-index: -2;
+      }
+      
+      /* Glassmorphism Utilities */
+      .glass-panel {
+        background: rgba(15, 23, 42, 0.5); /* Transparenter */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      }
+
+      .glass-button {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(109, 40, 217, 0.8));
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .glass-button:hover {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 1), rgba(124, 58, 237, 0.9));
+        box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+      }
+
+      /* Keyframes for React Components */
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+      @keyframes shimmer { 0% { transform: translateX(-150%); } 100% { transform: translateX(150%); } }
+      @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes bounce-slight { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <!-- Background Layers -->
+    <div class="background-container">
+      <div class="aurora-blob blob-1"></div>
+      <div class="aurora-blob blob-2"></div>
+      <div class="aurora-blob blob-3"></div>
+      <div class="aurora-blob blob-4"></div>
+      <div class="grid-overlay"></div>
+      <div class="stars-small"></div>
+      <div class="stars-medium"></div>
+    </div>
+    
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" class="relative z-10"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

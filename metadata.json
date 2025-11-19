@@ -1,0 +1,5 @@
+{
+  "name": "Quizo.me",
+  "description": "Eine interaktive Quiz-App, die allgemeine Wissensfragen mit dem Gemini API generiert. Testen Sie Ihr Wissen über verschiedene Themen und sehen Sie, wie viele Fragen Sie richtig beantworten können.",
+  "requestFramePermissions": []
+}
